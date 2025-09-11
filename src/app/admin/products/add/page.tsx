@@ -1,6 +1,9 @@
 "use client";
+import { addProduct } from '@/api/apiProduct';
+import { useState } from 'react';
 
 export default function AddProduct() {
+    const[loading, setLoading] = useState(false);
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
@@ -13,10 +16,15 @@ export default function AddProduct() {
         formDataToSend.append('price', price);
         formDataToSend.append('description', description);
         formDataToSend.append('image', image);
-        const response = await fetch('/api/products', {
-            method: 'POST',
-            body: formDataToSend,
-        });
+        formDataToSend.append('discountPrice','10');
+        try{
+            setLoading(true);
+            await addProduct(formDataToSend);
+        }catch(error){
+            console.log(error);
+        }finally{
+            setLoading(false);
+        }
     }
     return (
         <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">

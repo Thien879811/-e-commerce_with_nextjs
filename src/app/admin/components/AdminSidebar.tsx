@@ -2,12 +2,15 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+
+  const [isOpen, setIsOpen] = useState(true);
   
   const isActive = (path: string) => {
-    return pathname === path || pathname.startsWith(`${path}/`);
+    return pathname === path ;
   };
   
   const menuItems = [
@@ -20,11 +23,15 @@ export default function AdminSidebar() {
   ];
   
   return (
-    <div className="w-64 bg-gray-800 text-white min-h-screen flex-shrink-0">
-      <div className="p-4 border-b border-gray-700">
+    <div  className={`${isOpen ? 'w-64' : 'w-16'} transition-all duration-400 ease-in-out bg-gray-800 text-white min-h-screen flex-shrink-0`}>
+      <div onClick={()=> setIsOpen(!isOpen)} className="p-4 border-b border-gray-700">
         <Link href="/admin" className="flex items-center">
-          <span className="text-xl font-bold">E-Commerce</span>
-          <span className="ml-2 text-xs bg-blue-600 px-2 py-0.5 rounded">Admin</span>
+          {isOpen ? <span className="text-xl font-bold">E-Commerce</span> : 
+            <span className="text-2xl font-bold">
+              <svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </span>}
         </Link>
       </div>
       
@@ -47,7 +54,7 @@ export default function AdminSidebar() {
                     {item.icon === 'chart-bar' && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />}
                   </svg>
                 </span>
-                <span>{item.label}</span>
+                {isOpen && <span>{item.label}</span>}
               </Link>
             </li>
           ))}

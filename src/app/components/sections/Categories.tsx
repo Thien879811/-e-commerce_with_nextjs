@@ -1,7 +1,11 @@
+"use client"
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { API_URL } from '@/config';
+import type { Category } from '@/types';
 
-export default function Categories({ categories }) {
+export default function Categories({ categories }: { categories: Category[] }) {
   return (
     <section className="w-full py-12 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -16,7 +20,7 @@ export default function Categories({ categories }) {
             >
               <div className="relative h-24 w-24 mx-auto mb-4">
                 <Image 
-                  src={category.image || '/placeholder.png'} 
+                  src={`${API_URL}${category.image?.url}` || '/placeholder.png'} 
                   alt={category.name}
                   fill
                   style={{ objectFit: 'contain' }}

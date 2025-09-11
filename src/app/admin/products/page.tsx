@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import CategoryModal from "@/app/admin/components/CateloryModal";
 
 interface Product {
   _id: string;
@@ -10,12 +11,10 @@ interface Product {
 
 export default function AdminProduct() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const onClose = () => setIsOpen(false);
+  const onOpen = () => setIsOpen(true);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/api/products")
-      .then((res) => res.json())
-      .then(setProducts);
-  }, []);
 
   return (
     <div className="p-6">
@@ -33,12 +32,6 @@ export default function AdminProduct() {
           </tr>
         </thead>
         <tbody>
-          {products.map((p) => (
-            <tr key={p._id}>
-              <td className="border p-2">{p.name}</td>
-              <td className="border p-2">${p.price}</td>
-            </tr>
-          ))}
         </tbody>
       </table>
     </div>

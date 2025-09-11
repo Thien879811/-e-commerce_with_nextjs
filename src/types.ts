@@ -30,7 +30,10 @@ export interface Product {
 export interface Category {
   _id: string;
   name: string;
-  description?: string;
+  description?: string | undefined;
+  image?: {
+    url: string;
+  };
 }
 
 // Cart item interface
