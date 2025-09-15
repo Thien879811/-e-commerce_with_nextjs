@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import type {Product} from '@/types';
 
-export default function FeaturedProducts({ products }) {
+export default function FeaturedProducts({ products }: {products: Product[]}) {
   return (
     <section className="w-full py-12">
       <div className="container mx-auto px-4">

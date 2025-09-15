@@ -17,7 +17,7 @@ export default async function Home() {
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-4">
-      <Banner />
+      <Banner /> 
       <Categories categories={categories.categories} />
       <FeaturedProducts products={featuredProducts.products} />
       <NewProducts products={newProducts.products} />

@@ -2,12 +2,19 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+
 
 export default function AdminSidebar() {
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
   const isActive = (path: string) => {
     return pathname === path ;
@@ -37,11 +44,13 @@ export default function AdminSidebar() {
       
       <nav className="mt-4">
         <ul>
-          {menuItems.map((item) => (
-            <li key={item.path}>
+          {menuItems.map((item)=>{
+            const active = mounted && pathname === item.path;
+            return (
+               <li key={item.path}>
               <Link 
                 href={item.path} 
-                className={`flex items-center px-4 py-3 ${isActive(item.path) ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+                className={`flex items-center px-4 py-3 ${active ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
               >
                 <span className="mr-3">
                   {/* Icon placeholder - replace with actual icons */}
@@ -57,16 +66,17 @@ export default function AdminSidebar() {
                 {isOpen && <span>{item.label}</span>}
               </Link>
             </li>
-          ))}
+            )
+          })}
         </ul>
       </nav>
       
-      <div className="absolute bottom-0 w-64 p-4 border-t border-gray-700">
+      <div className="absolute bottom-0 w-64 p-4">
         <Link href="/" className="flex items-center text-gray-400 hover:text-white">
           <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          <span>Về trang chủ</span>
+          {isOpen && <span>Về trang chủ</span>}
         </Link>
       </div>
     </div>

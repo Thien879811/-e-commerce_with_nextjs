@@ -1,5 +1,3 @@
-// Định nghĩa các interface chung cho toàn bộ ứng dụng
-
 // User interface
 export interface User {
   _id: string;

@@ -9,7 +9,6 @@ export const getCategories = async () => {
 }
 
 export const createCategory = async (category: FormData) => {
-    console.log(API_URL)
     const response = await api.post(`admin/category/new`, category,{
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -37,3 +36,7 @@ export const updateCategory = async (id: string , category: FormData) => {
     return response.data;
 }
 
+export const deleteCategory = async(id : string) => {
+    const response  = await api.delete(`admin/category/${id}`);
+    return response.data;
+}

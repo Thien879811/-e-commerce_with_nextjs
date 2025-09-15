@@ -33,6 +33,7 @@ export default function CategoryModal({ isOpen, onClose, initialData, fetchCateg
             }
         } else {   // Create category
             await createCategory(formData);
+            fetchCategories();
         }
 
         onClose();
